@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Peasant.Core", "Peasant.Core\Peasant.Core.csproj", "{1B375706-D025-45E9-9643-792BD181E357}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Peasant.Core", "Peasant.Core\Peasant.Core.csproj", "{1B375706-D025-45E9-9643-792BD181E357}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Peasant.Console", "Peasant.Console\Peasant.Console.csproj", "{871F3226-4BE2-4FCB-A130-4D4423253D64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Peasant.Service", "Peasant.Service\Peasant.Service.csproj", "{D7441324-4A5A-4A2C-9D2C-F6484E62968D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Peasant.Desktop", "Peasant.Desktop\Peasant.Desktop.csproj", "{22D96D92-DBDD-4DB1-BE45-5021A277D0B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,10 @@ Global
 		{1B375706-D025-45E9-9643-792BD181E357}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B375706-D025-45E9-9643-792BD181E357}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B375706-D025-45E9-9643-792BD181E357}.Release|Any CPU.Build.0 = Release|Any CPU
+		{871F3226-4BE2-4FCB-A130-4D4423253D64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{871F3226-4BE2-4FCB-A130-4D4423253D64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{871F3226-4BE2-4FCB-A130-4D4423253D64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{871F3226-4BE2-4FCB-A130-4D4423253D64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
