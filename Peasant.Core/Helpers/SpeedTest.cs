@@ -2,14 +2,12 @@
 using System;
 using System.IO;
 
-namespace Peasant.Helpers;
-public class Result {
-    public float size = 1000000; //1gb
-    public float duration = 5; //5s
-    public int speed = 0; //kbps
-}
-public class SpeedTest {
-    public static void Start() {
+namespace Peasant.Core.Helpers;
+
+public class SpeedTest 
+{
+    public static void Start() 
+    {
         const string tempfile = "tempfile.tmp";
         System.Net.WebClient webClient = new System.Net.WebClient();
 

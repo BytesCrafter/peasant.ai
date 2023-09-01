@@ -1,5 +1,8 @@
 ﻿
-using Peasant.Helpers;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Peasant.Console;
+using Peasant.Core.Helpers;
 
 class Program 
 {
@@ -8,12 +11,17 @@ class Program
         if (args.Length > 0) 
         {
             Program.Process(args);
+            return;
         }
 
-        else 
-        {
-            Console.WriteLine("Invalid command!");
-        }
+        IHost host = Host.CreateDefaultBuilder(args)
+            .ConfigureServices(services =>
+            {
+                services.AddHostedService<Worker>();
+            })
+            .Build();
+
+        host.Run();
     }
 
     protected static void Process(string[] strings) 
