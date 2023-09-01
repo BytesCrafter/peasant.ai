@@ -1,11 +1,11 @@
 ﻿
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Peasant.Console;
 using Peasant.Core.Helpers;
 
 class Program 
 {
+    public static Service service = null;
+
     static void Main(string[] args) 
     {
         if (args.Length > 0) 
@@ -14,14 +14,8 @@ class Program
             return;
         }
 
-        IHost host = Host.CreateDefaultBuilder(args)
-            .ConfigureServices(services =>
-            {
-                services.AddHostedService<Worker>();
-            })
-            .Build();
-
-        host.Run();
+        Program.service = new Service(args);
+        Program.service.Start();
     }
 
     protected static void Process(string[] strings) 

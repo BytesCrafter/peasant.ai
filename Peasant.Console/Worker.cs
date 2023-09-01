@@ -21,4 +21,9 @@ public class Worker : BackgroundService
             await Task.Delay(1000, stoppingToken);
         }
     }
+
+    public override void Dispose()
+    {
+        _logger.LogInformation("Peasant HostedService is Disposed");
+    }
 }

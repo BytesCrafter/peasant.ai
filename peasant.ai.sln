@@ -8,6 +8,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Peasant.Console", "Peasant.Console\Peasant.Console.csproj", "{871F3226-4BE2-4FCB-A130-4D4423253D64}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Peasant.Desktop", "Peasant.Desktop\Peasant.Desktop.csproj", "{22D96D92-DBDD-4DB1-BE45-5021A277D0B3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{871F3226-4BE2-4FCB-A130-4D4423253D64} = {871F3226-4BE2-4FCB-A130-4D4423253D64}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
