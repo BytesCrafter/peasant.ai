@@ -32,7 +32,7 @@ namespace Peasant.Desktop
 
         public static void StartService()
         {
-            Program.service.Start();
+            Program.service.Start(false);
         }
 
         public static void StopService()

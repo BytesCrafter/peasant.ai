@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace Peasant.Console
 {
@@ -11,7 +10,7 @@ namespace Peasant.Console
 
         public Service(string[] args) 
         {
-            this.Build(args);
+            //Initialize something...
         }
 
         private void Build(string[] args)
@@ -24,13 +23,21 @@ namespace Peasant.Console
                 .Build();
         }
 
-        public async void Start()
+        public void Start(bool isBackground = true)
         {
             this.Build(new string[0]); //Build first.
 
             if (this.iHost != null && !isRunning)
             {
-                await this.iHost.StartAsync();
+                if(isBackground)
+                {
+                    this.iHost.Run();
+                }
+
+                else
+                {
+                    this.iHost.RunAsync();
+                }
             }
             isRunning = true;
         }

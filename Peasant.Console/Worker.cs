@@ -35,6 +35,7 @@ public class Worker : BackgroundService
 
     public override Task StopAsync(CancellationToken cancellationToken)
     {
+        this.Dispose();
         _logger.LogInformation("Peasant HostedService is Stopping");
         return base.StopAsync(cancellationToken);
     }
