@@ -26,4 +26,16 @@ public class Worker : BackgroundService
     {
         _logger.LogInformation("Peasant HostedService is Disposed");
     }
+
+    public override Task StartAsync(CancellationToken cancellationToken)
+    {
+        _logger.LogInformation("Peasant HostedService is Starting");
+        return base.StartAsync(cancellationToken);
+    }
+
+    public override Task StopAsync(CancellationToken cancellationToken)
+    {
+        _logger.LogInformation("Peasant HostedService is Stopping");
+        return base.StopAsync(cancellationToken);
+    }
 }
