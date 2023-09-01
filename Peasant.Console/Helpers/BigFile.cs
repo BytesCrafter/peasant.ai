@@ -1,6 +1,8 @@
 
 using System.Reflection.Emit;
 
+namespace Peasant.Helpers;
+
 public class BigClass {
     public static void Create(string filename = "dummyfile", int gigabyte = 1) {
         FileStream fs = new FileStream(@"c:\temp\"+filename, FileMode.Create);

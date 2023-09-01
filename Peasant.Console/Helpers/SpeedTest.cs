@@ -1,11 +1,13 @@
 
+using System;
+using System.IO;
 
+namespace Peasant.Helpers;
 public class Result {
     public float size = 1000000; //1gb
     public float duration = 5; //5s
     public int speed = 0; //kbps
 }
-
 public class SpeedTest {
     public static void Start() {
         const string tempfile = "tempfile.tmp";
@@ -17,7 +19,7 @@ public class SpeedTest {
         webClient.DownloadFile("http://speedtest.ftp.otenet.gr/files/test10Mb.db", tempfile);
         sw.Stop();
 
-        System.IO.FileInfo fileInfo = new System.IO.FileInfo(tempfile);
+        FileInfo fileInfo = new FileInfo(tempfile);
         long speed = fileInfo.Length / sw.Elapsed.Seconds / 1000 / 1000;
 
         Console.WriteLine("Download duration: {0} Seconds", sw.Elapsed.Seconds);

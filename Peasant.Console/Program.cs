@@ -1,4 +1,7 @@
-﻿class Program 
+﻿
+using Peasant.Helpers;
+
+class Program 
 {
     static void Main(string[] args) 
     {
