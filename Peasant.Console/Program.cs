@@ -29,9 +29,9 @@ class Program
             SpeedTest.Start();
         }
 
-        if (strings.Length > 0 && strings[0] == "netmap")
+        if (strings.Length > 0 && strings[0] == "nettool")
         {
-            new NetworkMapper();
+            new NetTool();
         }
     }
 }

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Peasant.Core.Controllers
 {
-    public class NetworkMapper
+    public class NetTool
     {
         class SupportRequest
         {
@@ -34,14 +34,14 @@ namespace Peasant.Core.Controllers
 
         static List<SupportRequest> supportRequests = new List<SupportRequest>();
 
-        public NetworkMapper()
+        public NetTool()
         {
             while (true)
             {
-                Console.WriteLine("Peasant: Network Mapper");
+                Console.WriteLine("Peasant: Network Tool");
                 Console.WriteLine("1. Check for online Host");
                 Console.WriteLine("2. Get Host's ports open");
-                Console.WriteLine("3. Exit Network Mapper");
+                Console.WriteLine("3. Exit Network Tool");
                 Console.Write("Enter your choice: ");
                 string pick = Console.ReadLine() ?? "0";
 
