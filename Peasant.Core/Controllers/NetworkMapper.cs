@@ -1,9 +1,12 @@
 ﻿using Peasant.Core.Helpers;
+using Peasant.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Net.Sockets;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -36,8 +39,9 @@ namespace Peasant.Core.Controllers
             while (true)
             {
                 Console.WriteLine("Peasant: Network Mapper");
-                Console.WriteLine("1. Check for active Host");
-                Console.WriteLine("2. Exit Network Mapper");
+                Console.WriteLine("1. Check for online Host");
+                Console.WriteLine("2. Get Host's ports open");
+                Console.WriteLine("3. Exit Network Mapper");
                 Console.Write("Enter your choice: ");
                 string pick = Console.ReadLine() ?? "0";
 
@@ -49,6 +53,9 @@ namespace Peasant.Core.Controllers
                             ScanNetworkHost();
                             break;
                         case 2:
+                            ScanOpenPorts();
+                            break;
+                        case 3:
                             Environment.Exit(0);
                             break;
                         default:
@@ -66,29 +73,58 @@ namespace Peasant.Core.Controllers
             }
         }
 
-        static bool PingHost(string ipAddress)
+        static Task<Port> IsPortOpen(string ipAddress, int port)
         {
+            
+            var tcs = new TaskCompletionSource<Port>();
             try
             {
-                Ping ping = new Ping();
-                PingReply reply = ping.Send(ipAddress);
-
-                if (reply != null && reply.Status == IPStatus.Success)
+                using (TcpClient tcpClient = new TcpClient())
                 {
-                    return true;
+                    tcpClient.Connect(ipAddress, port);
+                    tcs.SetResult(new Port(ipAddress, port, true) );
                 }
             }
-            catch (Exception)
+            catch (SocketException)
             {
-                // An exception occurred, indicating that the host is likely offline
+                tcs.SetResult(new Port(ipAddress, port, false) );
             }
 
-            return false;
+            return tcs.Task;
+        }
+
+        static void ScanOpenPorts()
+        {
+            Console.Write("Target IP: ");
+            string target_ip = Console.ReadLine() ?? "192.168.1.1";
+
+            Console.WriteLine("Scanning the ports open...");
+            Top100Ports[] top100 = Top100Ports.GetAllPorts().ToArray();
+
+            List<Task<Port>> portsOpen = new List<Task<Port>>();
+            for (int i=1; i < top100.Length; i++)
+            {
+                portsOpen.Add(IsPortOpen(target_ip, top100[i].Port));
+            }
+
+            //Wait for all the tasks to complete
+            Task.WaitAll(portsOpen.ToArray());
+
+            //Now you can iterate over your list of pingTasks
+            foreach (var pingTask in portsOpen)
+            {
+                if (pingTask.Result.isOpen != true)
+                    continue;
+
+                //pingTask.Result is whatever type T was declared in PingAsync
+                Console.WriteLine($"{pingTask.Result.ip} is currently open on port {pingTask.Result.port}!");
+            }
+
+            Console.WriteLine("Peasant scan the ports successfully.");
         }
 
         static void ScanNetworkHost()
         {
-            Console.WriteLine("Submit a support request");
             Console.Write("Gateway IP: ");
             string gw_ip = Console.ReadLine() ?? "192.168.1.1";
 
@@ -117,7 +153,7 @@ namespace Peasant.Core.Controllers
                 Console.WriteLine($"{pingTask.Result.Address.ToString()} is {(pingTask.Result.Status == IPStatus.Success ? "online" : "offline")} with a roundtrip time of {pingTask.Result.RoundtripTime}ms");
             }
 
-            Console.WriteLine("Support mapped the network successfully.");
+            Console.WriteLine("Peasant mapped the network successfully.");
         }
 
         static Task<PingReply> PingAsync(string address)
