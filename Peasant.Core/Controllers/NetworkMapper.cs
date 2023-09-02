@@ -95,14 +95,41 @@ namespace Peasant.Core.Controllers
             Console.Write("Gateway Subnet: ");
             int gw_sm = System.Convert.ToInt16(Console.ReadLine());
 
+            Console.WriteLine("Scanning the network mask provided...");
+
+            List<Task<PingReply>> pingTasks = new List<Task<PingReply>>();
             string[] ipAddresses = SubnetMask.ListIp(gw_ip, gw_sm);
             foreach (string ipAddress in ipAddresses)
             {
-                bool isOnline = PingHost(ipAddress);
-                Console.WriteLine($"{ipAddress} is {(isOnline ? "online" : "offline")}");
+                pingTasks.Add(PingAsync(ipAddress));
+            }
+
+            //Wait for all the tasks to complete
+            Task.WaitAll(pingTasks.ToArray());
+            
+            //Now you can iterate over your list of pingTasks
+            foreach (var pingTask in pingTasks)
+            {
+                if (pingTask.Result.Status != IPStatus.Success)
+                    continue;
+
+                //pingTask.Result is whatever type T was declared in PingAsync
+                Console.WriteLine($"{pingTask.Result.Address.ToString()} is {(pingTask.Result.Status == IPStatus.Success ? "online" : "offline")} with a roundtrip time of {pingTask.Result.RoundtripTime}ms");
             }
 
             Console.WriteLine("Support mapped the network successfully.");
+        }
+
+        static Task<PingReply> PingAsync(string address)
+        {
+            var tcs = new TaskCompletionSource<PingReply>();
+            Ping ping = new Ping();
+            ping.PingCompleted += (obj, sender) =>
+            {
+                tcs.SetResult(sender.Reply);
+            };
+            ping.SendAsync(address, new object());
+            return tcs.Task;
         }
     }
 }
