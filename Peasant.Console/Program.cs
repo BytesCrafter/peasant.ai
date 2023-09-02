@@ -1,5 +1,6 @@
 ﻿
 using Peasant.Console;
+using Peasant.Core.Controllers;
 using Peasant.Core.Helpers;
 
 class Program 
@@ -26,6 +27,11 @@ class Program
         
         if( strings.Length > 0 && strings[0] == "speedtest" ) {
             SpeedTest.Start();
+        }
+
+        if (strings.Length > 0 && strings[0] == "netmap")
+        {
+            new NetworkMapper();
         }
     }
 }
